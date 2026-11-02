@@ -161,7 +161,9 @@ class NotificationController(
                 lifecycleOwner.resume()
 
                 view.setContent {
-                    NotificationOverlay(
+                    if (spec.vollbild) {
+                        VollbildOverlay(spec.imageUrl)
+                    } else NotificationOverlay(
                         title            = spec.title ?: "",
                         message          = spec.message,
                         imageUrl         = spec.imageUrl,
@@ -251,8 +253,8 @@ class NotificationController(
         }
 
         return WindowManager.LayoutParams(
-            /* w = */ WindowManager.LayoutParams.WRAP_CONTENT,
-            /* h = */ WindowManager.LayoutParams.WRAP_CONTENT,
+            /* w = */ if (spec.vollbild) WindowManager.LayoutParams.MATCH_PARENT else WindowManager.LayoutParams.WRAP_CONTENT,
+            /* h = */ if (spec.vollbild) WindowManager.LayoutParams.MATCH_PARENT else WindowManager.LayoutParams.WRAP_CONTENT,
             /* _type = */ type,
             /* _flags = */ finalFlags,
             /* _format = */ PixelFormat.TRANSLUCENT
