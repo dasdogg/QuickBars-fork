@@ -122,6 +122,7 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("org.jmdns:jmdns:3.6.2")
     implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation("io.coil-kt:coil-gif:2.7.0")
     implementation("com.caverock:androidsvg:1.4")
     //implementation("io.coil-kt:coil-svg:2.7.0")
 

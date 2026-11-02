@@ -55,7 +55,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import coil.ImageLoader
 import coil.compose.AsyncImage
+import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
 import dev.trooped.tvquickbars.persistence.SecurePrefsManager
 import androidx.core.net.toUri
@@ -269,8 +271,14 @@ fun NotificationOverlay(
                         .build()
                 }
 
+                val animLoader = remember(ctx) {
+                    ImageLoader.Builder(ctx)
+                        .components { add(ImageDecoderDecoder.Factory()) }
+                        .build()
+                }
                 AsyncImage(
                     model = req,
+                    imageLoader = animLoader,
                     contentDescription = null,
                     modifier = Modifier
                         .size(width = animatedCardWidth, height = imageMaxHeight)
