@@ -15,9 +15,9 @@ jobs:
           distribution: temurin
           java-version: '17'
       # Platzhalter: Die App stürzt ohne Wert beim Start ab. Käufe und Plus funktionieren in diesem Bau nicht.
-      - run: chmod +x gradlew && ./gradlew --no-daemon assembleDebug -PREVENUECAT_API_KEY='"kein_kauf_in_eigenem_bau"'
+      - run: chmod +x gradlew && ./gradlew --no-daemon assembleProfileable -PREVENUECAT_API_KEY='"kein_kauf_in_eigenem_bau"'
       - uses: actions/upload-artifact@v4
         with:
-          name: quickbars-debug
-          path: app/build/outputs/apk/debug/*.apk
+          name: quickbars-schlank
+          path: app/build/outputs/apk/profileable/*.apk
           retention-days: 14
