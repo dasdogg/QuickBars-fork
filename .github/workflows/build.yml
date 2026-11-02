@@ -14,8 +14,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      # Fester Schluessel, damit Updates ohne Neuinstallation gehen. Nur fuer die Installation per ADB gedacht.
-      - run: test -f haus.keystore || keytool -genkeypair -keystore haus.keystore -storepass hauszuhause -keypass hauszuhause -alias haus -keyalg RSA -keysize 2048 -validity 20000 -dname "CN=Haus"
+      # Fester Schluessel aus dem GitHub-Secret, damit Updates ohne Neuinstallation gehen. Ohne Secret bricht der Bau bewusst ab.
+      - run: test -n "$HAUS_KEYSTORE_B64" && echo "$HAUS_KEYSTORE_B64" | base64 -d > haus.keystore
+        env:
+          HAUS_KEYSTORE_B64: ${{ secrets.HAUS_KEYSTORE_B64 }}
       # Platzhalter: Die App stürzt ohne Wert beim Start ab. Käufe und Plus funktionieren in diesem Bau nicht.
       - run: chmod +x gradlew && ./gradlew --no-daemon assembleProfileable -PREVENUECAT_API_KEY='"kein_kauf_in_eigenem_bau"' -Pandroid.injected.signing.store.file=$PWD/haus.keystore -Pandroid.injected.signing.store.password=hauszuhause -Pandroid.injected.signing.key.alias=haus -Pandroid.injected.signing.key.password=hauszuhause
       - uses: actions/upload-artifact@v4
@@ -23,5 +25,4 @@ jobs:
           name: quickbars-schlank
           path: |
             app/build/outputs/apk/profileable/*.apk
-            haus.keystore
           retention-days: 14

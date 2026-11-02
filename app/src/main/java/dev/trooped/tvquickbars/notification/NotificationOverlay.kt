@@ -91,6 +91,7 @@ fun NotificationOverlay(
     title: String?,
     message: String,
     imageUrl: String?,
+    amRand: Boolean = false,
     iconSvgDataUri: String?,
     actions: List<NotificationAction>,
     onActionClick: (NotificationAction) -> Unit,
@@ -144,7 +145,7 @@ fun NotificationOverlay(
             }
             .clip(RoundedCornerShape(12.dp))
             .background(bgColor)
-            .padding(12.dp),
+            .padding(start = 12.dp, top = 12.dp, end = 12.dp, bottom = if (amRand) 0.dp else 12.dp),
         horizontalAlignment = Alignment.Start
     ) {
         // Header row: icon (optional) + title (optional)

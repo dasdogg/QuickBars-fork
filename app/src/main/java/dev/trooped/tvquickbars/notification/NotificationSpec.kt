@@ -19,6 +19,7 @@ data class NotificationSpec(
     val soundVolumePercent: Int?,   // 0..200 (0=mute, 100=normal, >100 boosted)
     val iconSvgDataUri: String?,    // inline SVG data URI if provided
     val cid: String?,                // correlation id echoed from HA fire
+    val amRand: Boolean = false,     // Unten ohne Abstand zum Bildschirmrand
     val vollbild: Boolean = false,   // Bild über den ganzen Bildschirm, ohne Karte
 )
 
@@ -92,6 +93,7 @@ fun JSONObject.toNotificationSpec(cid: String?): NotificationSpec {
         iconSvgDataUri = iconModel,
         cid = cid,
         soundVolumePercent = soundPct,
+        amRand = optBoolean("am_rand", false),
         vollbild = optBoolean("vollbild", false)
     )
 }
